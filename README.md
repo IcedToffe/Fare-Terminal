@@ -1,8 +1,8 @@
-# Pamasahe Calculator — Davao–Tagum Route
+# Fare Calculator 
 
-A jeepney fare calculator for the Davao Terminal → Panabo → Sto. Tomas →
+A  fare calculator for the Davao Terminal → Panabo → Sto. Tomas →
 Tagum route. Pick your two stops (or type a distance directly) and it
-calculates the fare using the actual Davao Region jeepney fare formula —
+calculates the fare using the actual Davao Region jeepney fare formula 
 with an editable fare matrix, since rates change over time.
 
 **[Live demo →](#)** *(add your deployed link here once you host it)*
@@ -10,7 +10,7 @@ with an editable fare matrix, since rates change over time.
 ## Why I built this
 
 Most beginner project lists suggest connecting to a generic API. I wanted
-something that solves a problem I actually have — figuring out jeepney fare
+something that solves a problem I actually have — figuring out fare
 for my own commute — using real route data and the real LTFRB fare formula,
 not a toy example.
 
@@ -76,4 +76,4 @@ Once deployed to Vercel or GitHub Pages, this isn't an issue.
 
 ## Author
 
-Built by [your name] — 4th year IT student.
+Built by Milo ^_^
