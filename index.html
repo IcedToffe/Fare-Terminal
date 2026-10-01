@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pamasahe Calculator — Davao–Tagum Route</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <h1>Pamasahe Calculator</h1>
+    <p class="tagline">Davao – Panabo – Sto. Tomas – Tagum route</p>
+  </header>
+
+  <main>
+
+    <div class="mode-toggle" id="modeToggle">
+      <button class="mode-btn active" data-mode="stops">Pumili ng Hintuan</button>
+      <button class="mode-btn" data-mode="manual">Alam ko ang Distansya</button>
+    </div>
+
+    <section class="input-card">
+
+      <div class="mode-panel active" id="panel-stops">
+        <label class="field-label" for="fromStop">Mula sa</label>
+        <select class="field-input" id="fromStop"></select>
+
+        <label class="field-label" for="toStop">Papunta sa</label>
+        <select class="field-input" id="toStop"></select>
+
+        <p class="distance-readout" id="stopsDistance"></p>
+      </div>
+
+      <div class="mode-panel" id="panel-manual">
+        <label class="field-label" for="manualKm">Distansya (km)</label>
+        <input class="field-input" type="number" id="manualKm" min="0" step="0.1" placeholder="hal. 15">
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="discountCheck">
+        Estudyante / Senior Citizen / PWD / Buntis (20% discount)
+      </label>
+
+      <button class="calc-btn" id="calcBtn">Kalkulahin ang Pamasahe</button>
+      <p class="error-text" id="errorText" hidden></p>
+    </section>
+
+    <section class="result-placard" id="resultPlacard" hidden>
+      <div class="placard-header">RESIBO NG PAMASAHE</div>
+      <div class="placard-body">
+        <p class="placard-distance" id="placardDistance"></p>
+
+        <div class="placard-fares">
+          <div class="fare-block">
+            <span class="fare-label">Regular</span>
+            <span class="fare-value" id="fareRegular"></span>
+          </div>
+          <div class="fare-block fare-block--discount" id="discountBlock" hidden>
+            <span class="fare-label">May Diskwento (20%)</span>
+            <span class="fare-value" id="fareDiscounted"></span>
+          </div>
+        </div>
+
+        <p class="placard-breakdown" id="placardBreakdown"></p>
+      </div>
+    </section>
+
+    <details class="settings-panel">
+      <summary>I-edit ang fare matrix</summary>
+      <div class="settings-grid">
+        <label class="field-label" for="baseFare">Base fare (₱)</label>
+        <input class="field-input" type="number" id="baseFare" value="14" min="0" step="0.5">
+
+        <label class="field-label" for="baseKm">Para sa unang (km)</label>
+        <input class="field-input" type="number" id="baseKm" value="4" min="0" step="0.5">
+
+        <label class="field-label" for="rateKm">Dagdag kada sobrang km (₱)</label>
+        <input class="field-input" type="number" id="rateKm" value="1.80" min="0" step="0.1">
+      </div>
+      <p class="settings-note">
+        Default values: Davao Region traditional jeepney rate as of late September 2026
+        (₱14 for the first 4 km, ₱1.80 per succeeding km). Fares change — update these
+        if LTFRB-Davao issues a new matrix.
+      </p>
+    </details>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Ginawa bilang portfolio project — HTML, CSS, JavaScript &amp; JSON lang.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
