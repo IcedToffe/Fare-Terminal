@@ -34,9 +34,13 @@
 
   const map = L.map(mapEl, { scrollWheelZoom: false });
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-    attribution: "&copy; OpenStreetMap contributors"
+  // CARTO basemap (OpenStreetMap data). The standard OSM tile server blocks
+  // pages opened by double-click (file://), which is why the first version
+  // showed "Access blocked".
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+    subdomains: "abcd",
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
   }).addTo(map);
 
   const points = STOPS.map((s) => [s.lat, s.lng]);
