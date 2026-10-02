@@ -1,11 +1,16 @@
 // compare.js
 //
-// After a fare is calculated, shows traditional vs modern (aircon) jeepney
-// side by side for the same distance. Uses the same formula as script.js:
+// Bus version. After a fare is calculated, this file:
+//   1. optionally rounds the fare to the nearest peso (bus tickets are
+//      usually whole pesos), and
+//   2. shows Aircon bus vs Ordinary bus side by side for the same distance.
+//
+// Same formula as script.js:
 //   fare = baseFare + max(0, distance - baseKm) * ratePerKm
 //
-// Traditional values come from the existing fare matrix inputs; modern
-// values come from the new "Modern jeepney" inputs in the settings panel.
+// Matrix inputs (IDs are kept from the first version so script.js still works):
+//   baseFare / baseKm / rateKm                 -> AIRCON bus (main calculation)
+//   modernBaseFare / modernBaseKm / modernRateKm -> ORDINARY bus (comparison)
 
 (function () {
   const $ = (id) => document.getElementById(id);
@@ -14,7 +19,9 @@
   const modeToggle = $("modeToggle");
   const resultPlacard = $("resultPlacard");
   const placardDistance = $("placardDistance");
+  const placardBreakdown = $("placardBreakdown");
   const discountCheck = $("discountCheck");
+  const roundCheck = $("roundPeso");
 
   const compareCard = $("compareCard");
   const compareDiscountRow = $("compareDiscountRow");
@@ -22,11 +29,15 @@
 
   function fare(distance, baseFare, baseKm, ratePerKm) {
     const extraKm = Math.max(0, distance - baseKm);
-    return Math.round((baseFare + extraKm * ratePerKm) * 100) / 100;
+    return baseFare + extraKm * ratePerKm;
   }
 
-  function discount(amount) {
-    return Math.round(amount * 0.8 * 100) / 100;
+  // 20% discount is taken from the exact fare, then rounded (if rounding is on)
+  function finalize(exactFare, withRounding) {
+    const regular = withRounding ? Math.round(exactFare) : Math.round(exactFare * 100) / 100;
+    const discountedExact = exactFare * 0.8;
+    const discounted = withRounding ? Math.round(discountedExact) : Math.round(discountedExact * 100) / 100;
+    return { regular, discounted };
   }
 
   function peso(n) {
@@ -34,7 +45,7 @@
   }
 
   calcBtn.addEventListener("click", () => {
-    // script.js already ran: if it showed an error, there is no result to compare
+    // script.js already ran: if it showed an error, there is no result to work with
     if (resultPlacard.hidden) {
       compareCard.hidden = true;
       return;
@@ -42,41 +53,49 @@
 
     const distance = parseFloat(placardDistance.textContent);
 
-    const tBase = parseFloat($("baseFare").value);
-    const tKm = parseFloat($("baseKm").value);
-    const tRate = parseFloat($("rateKm").value);
+    const aBase = parseFloat($("baseFare").value);
+    const aKm = parseFloat($("baseKm").value);
+    const aRate = parseFloat($("rateKm").value);
 
-    const mBase = parseFloat($("modernBaseFare").value);
-    const mKm = parseFloat($("modernBaseKm").value);
-    const mRate = parseFloat($("modernRateKm").value);
+    const oBase = parseFloat($("modernBaseFare").value);
+    const oKm = parseFloat($("modernBaseKm").value);
+    const oRate = parseFloat($("modernRateKm").value);
 
-    const values = [distance, tBase, tKm, tRate, mBase, mKm, mRate];
+    const values = [distance, aBase, aKm, aRate, oBase, oKm, oRate];
     if (values.some((n) => isNaN(n) || n < 0)) {
       compareCard.hidden = true;
       return;
     }
 
-    const trad = fare(distance, tBase, tKm, tRate);
-    const modern = fare(distance, mBase, mKm, mRate);
+    const rounding = roundCheck.checked;
+    const aircon = finalize(fare(distance, aBase, aKm, aRate), rounding);
+    const ordinary = finalize(fare(distance, oBase, oKm, oRate), rounding);
 
-    $("cmpTradRegular").textContent = peso(trad);
-    $("cmpModernRegular").textContent = peso(modern);
+    // Update the main result placard (script.js showed the unrounded numbers)
+    if (rounding) {
+      $("fareRegular").textContent = peso(aircon.regular);
+      $("fareDiscounted").textContent = peso(aircon.discounted);
+      placardBreakdown.textContent += " (binilog sa pinakamalapit na piso)";
+    }
+
+    $("cmpAirconRegular").textContent = peso(aircon.regular);
+    $("cmpOrdinaryRegular").textContent = peso(ordinary.regular);
 
     if (discountCheck.checked) {
-      $("cmpTradDiscount").textContent = peso(discount(trad));
-      $("cmpModernDiscount").textContent = peso(discount(modern));
+      $("cmpAirconDiscount").textContent = peso(aircon.discounted);
+      $("cmpOrdinaryDiscount").textContent = peso(ordinary.discounted);
       compareDiscountRow.hidden = false;
     } else {
       compareDiscountRow.hidden = true;
     }
 
-    const diff = Math.round((modern - trad) * 100) / 100;
+    const diff = Math.round((aircon.regular - ordinary.regular) * 100) / 100;
     if (diff > 0) {
-      compareDiff.textContent = `Mas mahal ng ${peso(diff)} ang Modern kumpara sa Traditional para sa ${distance} km.`;
+      compareDiff.textContent = `Mas mahal ng ${peso(diff)} ang Aircon kumpara sa Ordinary para sa ${distance} km.`;
     } else if (diff < 0) {
-      compareDiff.textContent = `Mas mura ng ${peso(Math.abs(diff))} ang Modern kumpara sa Traditional para sa ${distance} km.`;
+      compareDiff.textContent = `Mas mura ng ${peso(Math.abs(diff))} ang Aircon kumpara sa Ordinary para sa ${distance} km.`;
     } else {
-      compareDiff.textContent = `Pareho ang pamasahe ng Traditional at Modern para sa ${distance} km.`;
+      compareDiff.textContent = `Pareho ang pamasahe ng Aircon at Ordinary para sa ${distance} km.`;
     }
 
     compareCard.hidden = false;
