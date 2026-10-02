@@ -2,7 +2,7 @@
 
 A  fare calculator for the Davao Terminal → Panabo → Sto. Tomas →
 Tagum route. Pick your two stops (or type a distance directly) and it
-calculates the fare using the actual Davao Region jeepney fare formula 
+calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
 
 **[Live demo →](#)** *(add your deployed link here once you host it)*
@@ -19,37 +19,37 @@ not a toy example.
 - Two ways to get a distance: pick two stops on the known route, or type a
   distance directly for trips not on the list
 - Real fare formula: base fare for the first few km, plus a rate per
-  additional km — exactly how LTFRB structures jeepney fares
+  additional km — exactly how LTFRB structures bus fares
 - Editable fare matrix (base fare, base km, rate per km) so the calculator
   doesn't go stale when fares change
 - 20% discount toggle for students, senior citizens, PWDs, and pregnant
   women — mandatory under LTFRB-Davao's current rules
 - Map view of the route: all stops are plotted, and the segment between your
   selected stops is highlighted
-- Fare comparison between traditional and modern (aircon) jeepneys for the
-  same trip, with its own editable fare matrix
+- Fare comparison between aircon and ordinary buses for the same trip, with
+  its own editable fare matrix
+- Optional rounding to the nearest peso, since bus tickets are usually whole pesos
 - Route distances for Davao Terminal, Panabo Terminal, Sto. Tomas Terminal,
   and Tagum Terminal, stored in their own `routes.json`
 - Fully responsive, no frameworks — plain HTML, CSS, JavaScript, and JSON
 
 ## Where the numbers came from
 
-- **Fare rate (as of late September 2026):** ₱14 base fare for the first
-  4 km, ₱1.80 per succeeding km, for traditional jeepneys in Davao Region —
-  per LTFRB-Davao's current rate and local news coverage (Sunstar Davao).
-  The mandatory 20% discount for students/senior citizens/PWDs/pregnant
-  women is confirmed in the same source.
+- **Fare rates (defaults):** Aircon bus ₱15 for the first 5 km + ₱2.65 per
+  succeeding km; Ordinary bus ₱13 for the first 5 km + ₱2.25 per succeeding km.
+  These are the LTFRB bus matrix before the March 2026 adjustment (the 2022
+  LTFRB-Davao announcement for ordinary city buses lists ₱13 + ₱2.25). The 20%
+  discount for students/senior citizens/PWDs/pregnant women is mandatory.
+  The March 2026 adjustment (aircon ₱18 + ₱2.98, ordinary ₱15 + ₱2.49, and a
+  separate provincial matrix) may apply to your bus, so always check the matrix
+  posted inside the bus and edit the fare settings if it differs.
 - **Route distances:** compiled from public road-distance tools (not a
   surveyed odometer reading), cross-checked against each other for
   consistency: Davao–Panabo ≈ 32 km, Panabo–Sto. Tomas ≈ 26 km,
   Sto. Tomas–Tagum ≈ 28.8 km, giving cumulative markers of 0 / 32 / 58 / 87 km
   from Davao Terminal.
-- **Modern jeepney rate (default):** ₱17 base fare for the first 4 km, ₱2.40
-  per succeeding km, from the LTFRB fare adjustment announced in March 2026.
-  Please verify this against the current LTFRB-Davao matrix; it is editable
-  in the app.
 - **Map:** stop coordinates are approximate town-center positions in `map.js`,
-  drawn on OpenStreetMap tiles with Leaflet. They show where the stops are,
+  drawn with Leaflet on CARTO basemap tiles (OpenStreetMap data). They show where the stops are,
   not the exact road path.
 - **Fares and distances change.** Both the fare matrix and the route
   distances are editable in the app / in `routes.json` — update them if
