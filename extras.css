@@ -1,0 +1,141 @@
+/* extras.css — styles for the map and the traditional-vs-modern comparison.
+   Uses the same custom properties as style.css. */
+
+/* ---------- Comparison card ---------- */
+
+.compare-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem 1.3rem;
+}
+
+.compare-title {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--blue);
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 0.6rem 0.4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-table thead th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.compare-table tbody th {
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.compare-table td {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.compare-table .col-modern { color: var(--blue); }
+
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td { border-bottom: none; }
+
+.compare-diff {
+  margin: 0.9rem 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ---------- Map ---------- */
+
+.map-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem 1.3rem;
+}
+
+.map-card h2 {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--blue);
+}
+
+.route-map {
+  width: 100%;
+  height: 20rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.route-map.map-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.map-legend {
+  margin: 0.8rem 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+/* Leaflet tooltips: match the app's font */
+.leaflet-tooltip {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ---------- Modern jeepney settings (inside the existing settings panel) ---------- */
+
+.settings-subtitle {
+  margin: 1.2rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.modern-grid {
+  margin-top: 0.6rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+.modern-grid .field-label { margin-top: 0; }
+
+@media (min-width: 480px) {
+  .modern-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Screen-reader-only text (used for the empty table header cell) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
