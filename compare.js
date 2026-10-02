@@ -1,16 +1,3 @@
-// compare.js
-//
-// Bus version. After a fare is calculated, this file:
-//   1. optionally rounds the fare to the nearest peso (bus tickets are
-//      usually whole pesos), and
-//   2. shows Aircon bus vs Ordinary bus side by side for the same distance.
-//
-// Same formula as script.js:
-//   fare = baseFare + max(0, distance - baseKm) * ratePerKm
-//
-// Matrix inputs (IDs are kept from the first version so script.js still works):
-//   baseFare / baseKm / rateKm                 -> AIRCON bus (main calculation)
-//   modernBaseFare / modernBaseKm / modernRateKm -> ORDINARY bus (comparison)
 
 (function () {
   const $ = (id) => document.getElementById(id);
