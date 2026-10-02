@@ -24,6 +24,10 @@ not a toy example.
   doesn't go stale when fares change
 - 20% discount toggle for students, senior citizens, PWDs, and pregnant
   women — mandatory under LTFRB-Davao's current rules
+- Map view of the route: all stops are plotted, and the segment between your
+  selected stops is highlighted
+- Fare comparison between traditional and modern (aircon) jeepneys for the
+  same trip, with its own editable fare matrix
 - Route distances for Davao Terminal, Panabo Terminal, Sto. Tomas Terminal,
   and Tagum Terminal, stored in their own `routes.json`
 - Fully responsive, no frameworks — plain HTML, CSS, JavaScript, and JSON
@@ -40,6 +44,13 @@ not a toy example.
   consistency: Davao–Panabo ≈ 32 km, Panabo–Sto. Tomas ≈ 26 km,
   Sto. Tomas–Tagum ≈ 28.8 km, giving cumulative markers of 0 / 32 / 58 / 87 km
   from Davao Terminal.
+- **Modern jeepney rate (default):** ₱17 base fare for the first 4 km, ₱2.40
+  per succeeding km, from the LTFRB fare adjustment announced in March 2026.
+  Please verify this against the current LTFRB-Davao matrix; it is editable
+  in the app.
+- **Map:** stop coordinates are approximate town-center positions in `map.js`,
+  drawn on OpenStreetMap tiles with Leaflet. They show where the stops are,
+  not the exact road path.
 - **Fares and distances change.** Both the fare matrix and the route
   distances are editable in the app / in `routes.json` — update them if
   LTFRB issues a new fare order, or if you measure the actual distance more
@@ -59,11 +70,15 @@ python3 -m http.server
 ```
 then open `http://localhost:8000`
 
-Once deployed to Vercel or GitHub Pages, this isn't an issue.
+Once deployed to Vercel or GitHub Pages, this isn't an issue. As a safety net,
+`fetch-fallback.js` also supplies a built-in copy of the route data when the
+page is opened by double-click, so the dropdowns still work. If you edit
+`routes.json`, update that copy too. The map needs an internet connection.
 
 ## Tech stack
 
 - HTML5
+- Leaflet (map, loaded from a CDN)
 - CSS3 (custom properties, flexbox, grid)
 - Vanilla JavaScript (fetch API, async/await, form validation, number formatting)
 - JSON for the route data
@@ -71,8 +86,7 @@ Once deployed to Vercel or GitHub Pages, this isn't an issue.
 ## What I'd add next
 
 - More routes (jeepney, multicab, or other common commutes in Davao del Norte)
-- A map view showing the stops
-- Fare comparison between traditional and modern (aircon) jeepneys
+- A route line that follows the actual road instead of straight segments
 
 ## Author
 
