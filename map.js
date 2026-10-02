@@ -34,14 +34,45 @@
 
   const map = L.map(mapEl, { scrollWheelZoom: false });
 
-  // CARTO basemap (OpenStreetMap data). The standard OSM tile server blocks
-  // pages opened by double-click (file://), which is why the first version
-  // showed "Access blocked".
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    subdomains: "abcd",
-    maxZoom: 19,
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
-  }).addTo(map);
+  // Tile providers, tried in order. If one starts failing (blocked, needs an
+  // API key, offline...), the map automatically switches to the next one.
+  //  - OpenStreetMap's own server refuses pages opened by double-click
+  //    (file://), but is the right choice once the site is hosted.
+  //  - Esri's street map works without an API key, including from file://.
+  const PROVIDERS = [
+    {
+      url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      options: { maxZoom: 18, attribution: "Tiles &copy; Esri" }
+    },
+    {
+      url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      options: { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }
+    }
+  ];
+
+  // When hosted over http(s), prefer OpenStreetMap first
+  if (location.protocol === "http:" || location.protocol === "https:") {
+    PROVIDERS.reverse();
+  }
+
+  let providerIndex = 0;
+  let tileErrors = 0;
+  let tiles = null;
+
+  function useProvider(i) {
+    if (tiles) map.removeLayer(tiles);
+    tileErrors = 0;
+    tiles = L.tileLayer(PROVIDERS[i].url, PROVIDERS[i].options).addTo(map);
+    tiles.on("tileerror", () => {
+      tileErrors += 1;
+      if (tileErrors === 3 && providerIndex < PROVIDERS.length - 1) {
+        providerIndex += 1;
+        useProvider(providerIndex);
+      }
+    });
+  }
+
+  useProvider(providerIndex);
 
   const points = STOPS.map((s) => [s.lat, s.lng]);
 
