@@ -72,25 +72,25 @@
     </section>
 
     <section class="compare-card" id="compareCard" hidden>
-      <h2 class="compare-title">Traditional vs Modern (aircon)</h2>
+      <h2 class="compare-title">Aircon vs Ordinary bus</h2>
       <table class="compare-table">
         <thead>
           <tr>
             <th scope="col"><span class="visually-hidden">Uri ng pamasahe</span></th>
-            <th scope="col">Traditional</th>
-            <th scope="col">Modern</th>
+            <th scope="col">Aircon</th>
+            <th scope="col">Ordinary</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Regular</th>
-            <td id="cmpTradRegular"></td>
-            <td class="col-modern" id="cmpModernRegular"></td>
+            <td id="cmpAirconRegular"></td>
+            <td class="col-modern" id="cmpOrdinaryRegular"></td>
           </tr>
           <tr id="compareDiscountRow" hidden>
             <th scope="row">May diskwento (20%)</th>
-            <td id="cmpTradDiscount"></td>
-            <td class="col-modern" id="cmpModernDiscount"></td>
+            <td id="cmpAirconDiscount"></td>
+            <td class="col-modern" id="cmpOrdinaryDiscount"></td>
           </tr>
         </tbody>
       </table>
@@ -105,53 +105,53 @@
 
     <details class="settings-panel">
       <summary>I-edit ang fare matrix</summary>
-      <p class="settings-subtitle">Traditional jeepney</p>
+      <p class="settings-subtitle">Aircon bus (pangunahing kalkulasyon)</p>
       <div class="settings-grid">
         <div>
           <label class="field-label" for="baseFare">Base fare (₱)</label>
-          <input class="field-input" type="number" id="baseFare" value="14" min="0" step="0.5">
+          <input class="field-input" type="number" id="baseFare" value="15" min="0" step="0.5">
         </div>
         <div>
           <label class="field-label" for="baseKm">Para sa unang (km)</label>
-          <input class="field-input" type="number" id="baseKm" value="4" min="0" step="0.5">
+          <input class="field-input" type="number" id="baseKm" value="5" min="0" step="0.5">
         </div>
         <div>
           <label class="field-label" for="rateKm">Dagdag kada sobrang km (₱)</label>
-          <input class="field-input" type="number" id="rateKm" value="1.80" min="0" step="0.1">
+          <input class="field-input" type="number" id="rateKm" value="2.65" min="0" step="0.1">
         </div>
       </div>
-      <p class="settings-subtitle">Modern (aircon) jeepney</p>
+      <p class="settings-subtitle">Ordinary bus (pang-compare)</p>
       <div class="modern-grid">
         <div>
           <label class="field-label" for="modernBaseFare">Base fare (₱)</label>
-          <input class="field-input" type="number" id="modernBaseFare" value="17" min="0" step="0.5">
+          <input class="field-input" type="number" id="modernBaseFare" value="13" min="0" step="0.5">
         </div>
         <div>
           <label class="field-label" for="modernBaseKm">Para sa unang (km)</label>
-          <input class="field-input" type="number" id="modernBaseKm" value="4" min="0" step="0.5">
+          <input class="field-input" type="number" id="modernBaseKm" value="5" min="0" step="0.5">
         </div>
         <div>
           <label class="field-label" for="modernRateKm">Dagdag kada sobrang km (₱)</label>
-          <input class="field-input" type="number" id="modernRateKm" value="2.40" min="0" step="0.1">
+          <input class="field-input" type="number" id="modernRateKm" value="2.25" min="0" step="0.1">
         </div>
       </div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="roundPeso" checked>
+        I-round sa pinakamalapit na piso (karaniwan sa bus ticket)
+      </label>
       <p class="settings-note">
-        Modern jeepney defaults (₱17 for the first 4 km, ₱2.40 per succeeding km) are from
-        the LTFRB fare adjustment announced in March 2026. Please verify against the current
-        LTFRB-Davao matrix and update here if it differs.
-      </p>
-      <p class="settings-note">
-        Default values: Davao Region traditional jeepney rate as of late September 2026
-        (₱14 for the first 4 km, ₱1.80 per succeeding km). Fares change — update these
-        if LTFRB-Davao issues a new matrix.
+        Default values: Aircon bus ₱15 for the first 5 km + ₱2.65 per succeeding km;
+        Ordinary bus ₱13 for the first 5 km + ₱2.25 per succeeding km (the LTFRB bus
+        matrix before the March 2026 adjustment). The March 2026 adjustment
+        (aircon ₱18 + ₱2.98, ordinary ₱15 + ₱2.49) and the separate provincial bus
+        matrix may apply to your bus. Check the matrix posted inside the bus and
+        update these numbers if it differs.
       </p>
     </details>
 
   </main>
 
-  <footer class="site-footer">
-    <p>Ginawa bilang portfolio project — HTML, CSS, JavaScript &amp; JSON lang.</p>
-  </footer>
+ 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script src="fetch-fallback.js"></script>
