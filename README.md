@@ -87,6 +87,11 @@ page is opened by double-click, so the dropdowns still work. If you edit
 - More routes (jeepney, multicab, or other common commutes in Davao del Norte)
 - A route line that follows the actual road instead of straight segments
 
+## What to fix
+-The Panabo city to Tagum city location have a 2 stops instead of a 1 stop.
+
+
+
 ## Author
 
 Built by Milo ^_^
