@@ -88,9 +88,8 @@ page is opened by double-click, so the dropdowns still work. If you edit
 - A route line that follows the actual road instead of straight segments
 
 ## What to fix
--The Panabo city to Tagum city location have a 2 stops instead of a 1 stop.
--Need a carmen map
-
+- The Panabo city to Tagum city location have a 2 stops instead of a 1 stop.
+- Need a carmen map
 
 ## Author
 
