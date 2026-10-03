@@ -1,6 +1,6 @@
-# Fare Calculator 
+# BiyaheRate
 
-A  fare calculator for the Davao Terminal → Panabo → Sto. Tomas →
+A  BiyaheRate for the Davao Terminal → Panabo → Sto. Tomas →
 Tagum route. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
