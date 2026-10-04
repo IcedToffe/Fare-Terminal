@@ -4,16 +4,18 @@
 // highlights the segment between the "Mula sa" and "Papunta sa" stops.
 //
 // Coordinates are approximate town-center positions, only meant for
-// showing where the stops are. The order MUST match the stop order in
-// routes.json (index 0 = first stop, and so on).
+// showing where the stops are. Stops are matched by name, so a stop name in
+// routes.json must also exist in COORDS below to appear on the map.
 
 (function () {
-  const STOPS = [
-    { name: "Davao Terminal",      lat: 7.0731, lng: 125.6128 },
-    { name: "Panabo Terminal",     lat: 7.3075, lng: 125.6840 },
-    { name: "Carmen Terminal",     lat: 7.3583, lng: 125.7000 },
-    { name: "Tagum Terminal",      lat: 7.4478, lng: 125.8078 }
-  ];
+  // Coordinates are looked up by stop name, so any route in routes.json can be drawn.
+  const COORDS = {
+    "Davao Terminal":      [7.0731, 125.6128],
+    "Panabo Terminal":     [7.3075, 125.6840],
+    "Carmen Terminal":     [7.3583, 125.7000],
+    "Sto. Tomas Terminal": [7.5333, 125.6167],
+    "Tagum Terminal":      [7.4478, 125.8078]
+  };
 
   const mapEl = document.getElementById("routeMap");
   if (!mapEl) return;
@@ -74,20 +76,40 @@
 
   useProvider(providerIndex);
 
-  const points = STOPS.map((s) => [s.lat, s.lng]);
+  // Default view (Davao del Norte area) until the dropdowns are filled
+  map.setView([7.3, 125.65], 9);
 
-  // Whole route (quiet), then a highlight layer redrawn on every change
-  L.polyline(points, { color: SOFT, weight: 3, opacity: 0.6, dashArray: "6 8" }).addTo(map);
-  map.fitBounds(points, { padding: [30, 30] });
-
+  const baseLayer = L.layerGroup().addTo(map);
   const highlight = L.layerGroup().addTo(map);
+  let lastRouteKey = "";
+
+  // The current route's stops, read from the "Mula sa" dropdown (filled by script.js)
+  function currentStops() {
+    return Array.from(fromStop.options)
+      .map((opt) => ({ name: opt.text, pos: COORDS[opt.text] }))
+      .filter((s) => s.pos);
+  }
 
   function redraw() {
     highlight.clearLayers();
 
+    const stops = currentStops();
+    if (stops.length === 0) return;
+
+    const points = stops.map((s) => s.pos);
+
+    // Whole route (quiet). Redrawn and re-fitted only when the route changes.
+    const routeKey = stops.map((s) => s.name).join("|");
+    if (routeKey !== lastRouteKey) {
+      baseLayer.clearLayers();
+      L.polyline(points, { color: SOFT, weight: 3, opacity: 0.6, dashArray: "6 8" }).addTo(baseLayer);
+      map.fitBounds(points, { padding: [30, 30] });
+      lastRouteKey = routeKey;
+    }
+
     const a = parseInt(fromStop.value, 10);
     const b = parseInt(toStop.value, 10);
-    const hasSelection = !isNaN(a) && !isNaN(b) && STOPS[a] && STOPS[b];
+    const hasSelection = !isNaN(a) && !isNaN(b) && stops[a] && stops[b];
 
     if (hasSelection && a !== b) {
       const lo = Math.min(a, b);
@@ -95,11 +117,11 @@
       L.polyline(points.slice(lo, hi + 1), { color: BLUE, weight: 6, opacity: 0.9 }).addTo(highlight);
     }
 
-    STOPS.forEach((stop, i) => {
+    stops.forEach((stop, i) => {
       const isFrom = hasSelection && i === a;
       const isTo = hasSelection && i === b;
 
-      const marker = L.circleMarker([stop.lat, stop.lng], {
+      const marker = L.circleMarker(stop.pos, {
         radius: isFrom || isTo ? 9 : 6,
         color: "#FFFFFF",
         weight: 2,
@@ -114,7 +136,7 @@
   fromStop.addEventListener("change", redraw);
   toStop.addEventListener("change", redraw);
 
-  // script.js fills the dropdowns after routes.json loads, so redraw then too
+  // script.js / routes-select.js fill the dropdowns, so redraw when they change
   new MutationObserver(redraw).observe(toStop, { childList: true });
 
   redraw();
