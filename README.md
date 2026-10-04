@@ -1,11 +1,12 @@
-# Byahe Rate
+# Fare Calculator 
 
-A  Pasahero Fare Estimator for the Davao Terminal → Panabo → Carmen →
-Tagum route. Pick your two stops (or type a distance directly) and it
+A  fare calculator for the Davao Terminal → Panabo → Carmen / Sto. Tomas →
+Tagum routes. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
 
-[Live demo →](https://fare-terminal-omega.vercel.app/)
+**[Live demo →](#)** *(add your deployed link here once you host it)*
+
 ## Why I built this
 
 Most beginner project lists suggest connecting to a generic API. I wanted
@@ -29,7 +30,7 @@ not a toy example.
   its own editable fare matrix
 - Optional rounding to the nearest peso, since bus tickets are usually whole pesos
 - Route distances for Davao Terminal, Panabo Terminal, Carmen Terminal,
-  and Tagum Terminal, stored in their own `routes.json`
+  Sto. Tomas Terminal, and Tagum Terminal, stored in their own `routes.json`
 - Fully responsive, no frameworks — plain HTML, CSS, JavaScript, and JSON
 
 ## Where the numbers came from
@@ -48,8 +49,10 @@ not a toy example.
   Carmen–Tagum ≈ 15 km, giving cumulative markers of 0 / 32 / 40 / 55 km
   from Davao Terminal. The Carmen split is an estimate (the straight-line
   distances are about 6.6 km Panabo–Carmen and 15.4 km Carmen–Tagum), so
-  adjust it if you know the actual figure. Sto. Tomas is not on this route:
-  it is on a separate road branching off at Panabo, so it was removed.
+  adjust it if you know the actual figure. Sto. Tomas is on a separate road
+  branching off at Panabo, so it is its own route: Davao–Panabo ≈ 32 km,
+  Panabo–Sto. Tomas ≈ 26 km, Sto. Tomas–Tagum ≈ 28.8 km, giving markers of
+  0 / 32 / 58 / 87 km. Pick the route from the dropdown.
 - **Map:** stop coordinates are approximate town-center positions in `map.js`,
   drawn with Leaflet. Tiles come from Esri (works without an API key, even from a double-clicked file), with OpenStreetMap preferred once the site is hosted and an automatic switch if one fails. They show where the stops are,
   not the exact road path.
@@ -87,7 +90,6 @@ page is opened by double-click, so the dropdowns still work. If you edit
 
 ## What I'd add next
 
-- A separate Davao – Panabo – Sto. Tomas route
 - More routes (jeepney, multicab, or other common commutes in Davao del Norte)
 - A route line that follows the actual road instead of straight segments
 
