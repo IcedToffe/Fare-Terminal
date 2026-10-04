@@ -11,7 +11,7 @@
   const STOPS = [
     { name: "Davao Terminal",      lat: 7.0731, lng: 125.6128 },
     { name: "Panabo Terminal",     lat: 7.3075, lng: 125.6840 },
-    { name: "Sto. Tomas Terminal", lat: 7.5333, lng: 125.6167 },
+    { name: "Carmen Terminal",     lat: 7.3583, lng: 125.7000 },
     { name: "Tagum Terminal",      lat: 7.4478, lng: 125.8078 }
   ];
 
