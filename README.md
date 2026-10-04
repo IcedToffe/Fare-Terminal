@@ -1,6 +1,6 @@
 # Byahe Rate
 
-A  fare calculator for the Davao Terminal → Panabo → Carmen →
+A  Pasahero Fare Estimator for the Davao Terminal → Panabo → Carmen →
 Tagum route. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
