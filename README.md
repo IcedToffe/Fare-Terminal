@@ -1,11 +1,12 @@
-# BiyaheRate
+# Fare Calculator 
 
-A  BiyaheRate for the Davao Terminal → Panabo → Sto. Tomas →
+A  fare calculator for the Davao Terminal → Panabo → Carmen →
 Tagum route. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
 
-[Live demo →](https://fare-terminal-omega.vercel.app/) 
+**[Live demo →](#)** *(add your deployed link here once you host it)*
+
 ## Why I built this
 
 Most beginner project lists suggest connecting to a generic API. I wanted
@@ -28,7 +29,7 @@ not a toy example.
 - Fare comparison between aircon and ordinary buses for the same trip, with
   its own editable fare matrix
 - Optional rounding to the nearest peso, since bus tickets are usually whole pesos
-- Route distances for Davao Terminal, Panabo Terminal, Sto. Tomas Terminal,
+- Route distances for Davao Terminal, Panabo Terminal, Carmen Terminal,
   and Tagum Terminal, stored in their own `routes.json`
 - Fully responsive, no frameworks — plain HTML, CSS, JavaScript, and JSON
 
@@ -44,11 +45,14 @@ not a toy example.
   posted inside the bus and edit the fare settings if it differs.
 - **Route distances:** compiled from public road-distance tools (not a
   surveyed odometer reading), cross-checked against each other for
-  consistency: Davao–Panabo ≈ 32 km, Panabo–Sto. Tomas ≈ 26 km,
-  Sto. Tomas–Tagum ≈ 28.8 km, giving cumulative markers of 0 / 32 / 58 / 87 km
-  from Davao Terminal.
+  consistency: Davao–Panabo ≈ 32 km, Panabo–Carmen ≈ 8 km,
+  Carmen–Tagum ≈ 15 km, giving cumulative markers of 0 / 32 / 40 / 55 km
+  from Davao Terminal. The Carmen split is an estimate (the straight-line
+  distances are about 6.6 km Panabo–Carmen and 15.4 km Carmen–Tagum), so
+  adjust it if you know the actual figure. Sto. Tomas is not on this route:
+  it is on a separate road branching off at Panabo, so it was removed.
 - **Map:** stop coordinates are approximate town-center positions in `map.js`,
-  drawn with Leaflet on CARTO basemap tiles (OpenStreetMap data). They show where the stops are,
+  drawn with Leaflet. Tiles come from Esri (works without an API key, even from a double-clicked file), with OpenStreetMap preferred once the site is hosted and an automatic switch if one fails. They show where the stops are,
   not the exact road path.
 - **Fares and distances change.** Both the fare matrix and the route
   distances are editable in the app / in `routes.json` — update them if
@@ -84,12 +88,9 @@ page is opened by double-click, so the dropdowns still work. If you edit
 
 ## What I'd add next
 
+- A separate Davao – Panabo – Sto. Tomas route
 - More routes (jeepney, multicab, or other common commutes in Davao del Norte)
 - A route line that follows the actual road instead of straight segments
-
-## What to fix
-- The Panabo city to Tagum city location have a 2 stops instead of a 1 stop.
-- Need a carmen map
 
 ## Author
 
