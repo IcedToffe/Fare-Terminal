@@ -1,12 +1,11 @@
-# Fare Calculator 
+# Byahe Rate
 
 A  fare calculator for the Davao Terminal → Panabo → Carmen →
 Tagum route. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
 
-**[Live demo →](#)** *(add your deployed link here once you host it)*
-
+[Live demo →](https://fare-terminal-omega.vercel.app/)
 ## Why I built this
 
 Most beginner project lists suggest connecting to a generic API. I wanted
