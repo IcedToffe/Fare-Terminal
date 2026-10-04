@@ -12,14 +12,49 @@
 (function () {
   const ROUTES_FALLBACK = [
     {
-      id: "davao-tagum",
-      name: "Davao – Panabo – Carmen – Tagum",
-      note: "Distances are approximate road distances compiled from public distance-calculator sources, not a surveyed odometer reading.",
-      stops: [
-        { name: "Davao Terminal", km: 0 },
-        { name: "Panabo Terminal", km: 32 },
-        { name: "Carmen Terminal", km: 40 },
-        { name: "Tagum Terminal", km: 55 }
+      "id": "davao-carmen-tagum",
+      "name": "Davao – Panabo – Carmen – Tagum",
+      "note": "Distances are approximate road distances compiled from public distance-calculator sources, not a surveyed odometer reading. Adjust the km values below if you know the actual distance more precisely.",
+      "stops": [
+        {
+          "name": "Davao Terminal",
+          "km": 0
+        },
+        {
+          "name": "Panabo Terminal",
+          "km": 32
+        },
+        {
+          "name": "Carmen Terminal",
+          "km": 40
+        },
+        {
+          "name": "Tagum Terminal",
+          "km": 55
+        }
+      ]
+    },
+    {
+      "id": "davao-sto-tomas-tagum",
+      "name": "Davao – Panabo – Sto. Tomas – Tagum",
+      "note": "Distances are approximate road distances compiled from public distance-calculator sources, not a surveyed odometer reading. Adjust the km values below if you know the actual distance more precisely.",
+      "stops": [
+        {
+          "name": "Davao Terminal",
+          "km": 0
+        },
+        {
+          "name": "Panabo Terminal",
+          "km": 32
+        },
+        {
+          "name": "Sto. Tomas Terminal",
+          "km": 58
+        },
+        {
+          "name": "Tagum Terminal",
+          "km": 87
+        }
       ]
     }
   ];
