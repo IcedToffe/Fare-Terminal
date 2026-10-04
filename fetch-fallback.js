@@ -13,13 +13,13 @@
   const ROUTES_FALLBACK = [
     {
       id: "davao-tagum",
-      name: "Davao – Panabo – Sto. Tomas – Tagum",
+      name: "Davao – Panabo – Carmen – Tagum",
       note: "Distances are approximate road distances compiled from public distance-calculator sources, not a surveyed odometer reading.",
       stops: [
         { name: "Davao Terminal", km: 0 },
         { name: "Panabo Terminal", km: 32 },
-        { name: "Sto. Tomas Terminal", km: 58 },
-        { name: "Tagum Terminal", km: 87 }
+        { name: "Carmen Terminal", km: 40 },
+        { name: "Tagum Terminal", km: 55 }
       ]
     }
   ];
