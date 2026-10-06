@@ -83,15 +83,12 @@ modeToggle.addEventListener("click", (e) => {
 function updateStopsDistance() {
   if (!route) return;
 
-  const fromKm = route.stops[fromStop.value]?.km;
-  const toKm = route.stops[toStop.value]?.km;
-
-  if (fromKm === undefined || toKm === undefined) {
+  if (!route.stops[fromStop.value] || !route.stops[toStop.value]) {
     stopsDistance.textContent = "";
     return;
   }
 
-  const distance = Math.abs(toKm - fromKm);
+  const distance = RouteGraph.distance(route, fromStop.value, toStop.value);
   stopsDistance.textContent =
     distance === 0
       ? "Parehong hintuan — walang distansya."
@@ -121,9 +118,7 @@ calcBtn.addEventListener("click", () => {
       showError("Hindi pa handa ang route data.");
       return;
     }
-    const fromKm = route.stops[fromStop.value].km;
-    const toKm = route.stops[toStop.value].km;
-    distance = Math.abs(toKm - fromKm);
+    distance = RouteGraph.distance(route, fromStop.value, toStop.value);
 
     if (distance === 0) {
       showError("Pumili ng dalawang magkaibang hintuan.");
