@@ -12,48 +12,51 @@
 (function () {
   const ROUTES_FALLBACK = [
     {
-      "id": "davao-carmen-tagum",
-      "name": "Davao – Panabo – Carmen – Tagum",
-      "note": "Distances are approximate road distances compiled from public distance-calculator sources, not a surveyed odometer reading. Adjust the km values below if you know the actual distance more precisely.",
+      "id": "davao-tagum-network",
+      "name": "Davao – Panabo – Carmen – Sto. Tomas – Tagum",
+      "note": "Segment lengths are approximate road distances, not a surveyed odometer reading. The distance between any two stops is the shortest way through these segments. Adjust the km values if you know the actual distance more precisely.",
       "stops": [
         {
-          "name": "Davao Terminal",
-          "km": 0
+          "name": "Davao Terminal"
         },
         {
-          "name": "Panabo Terminal",
-          "km": 32
+          "name": "Panabo Terminal"
         },
         {
-          "name": "Carmen Terminal",
-          "km": 40
+          "name": "Carmen Terminal"
         },
         {
-          "name": "Tagum Terminal",
-          "km": 55
+          "name": "Sto. Tomas Terminal"
+        },
+        {
+          "name": "Tagum Terminal"
         }
-      ]
-    },
-    {
-      "id": "davao-sto-tomas-tagum",
-      "name": "Davao – Panabo – Sto. Tomas – Tagum",
-      "note": "Distances are approximate road distances compiled from public distance-calculator sources, not a surveyed odometer reading. Adjust the km values below if you know the actual distance more precisely.",
-      "stops": [
+      ],
+      "segments": [
         {
-          "name": "Davao Terminal",
-          "km": 0
-        },
-        {
-          "name": "Panabo Terminal",
+          "from": 0,
+          "to": 1,
           "km": 32
         },
         {
-          "name": "Sto. Tomas Terminal",
-          "km": 58
+          "from": 1,
+          "to": 2,
+          "km": 8
         },
         {
-          "name": "Tagum Terminal",
-          "km": 87
+          "from": 2,
+          "to": 4,
+          "km": 15
+        },
+        {
+          "from": 1,
+          "to": 3,
+          "km": 26
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "km": 28.8
         }
       ]
     }
