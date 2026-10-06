@@ -1,7 +1,7 @@
-# Fare Calculator 
+# Pasahero Fare Estimator
 
-A  fare calculator for the Davao Terminal → Panabo → Carmen / Sto. Tomas →
-Tagum routes. Pick your two stops (or type a distance directly) and it
+A  Pasahero Fare Estimator for the Davao Terminal → Panabo → Carmen → Sto. Tomas →
+Tagum stops. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
 
@@ -10,8 +10,8 @@ with an editable fare matrix, since rates change over time.
 ## Why I built this
 
 Most beginner project lists suggest connecting to a generic API. I wanted
-something that solves a problem I actually have — figuring out fare
-for my own commute — using real route data and the real LTFRB fare formula,
+something that solves a problem I actually have figuring out fare
+for my own commute using real route data and the real LTFRB fare formula,
 not a toy example.
 
 ## Features
@@ -35,7 +35,7 @@ not a toy example.
 
 ## Where the numbers came from
 
-- **Fare rates (defaults):** Aircon bus ₱15 for the first 5 km + ₱2.65 per
+- Aircon bus ₱15 for the first 5 km + ₱2.65 per
   succeeding km; Ordinary bus ₱13 for the first 5 km + ₱2.25 per succeeding km.
   These are the LTFRB bus matrix before the March 2026 adjustment (the 2022
   LTFRB-Davao announcement for ordinary city buses lists ₱13 + ₱2.25). The 20%
@@ -43,20 +43,19 @@ not a toy example.
   The March 2026 adjustment (aircon ₱18 + ₱2.98, ordinary ₱15 + ₱2.49, and a
   separate provincial matrix) may apply to your bus, so always check the matrix
   posted inside the bus and edit the fare settings if it differs.
-- **Route distances:** compiled from public road-distance tools (not a
-  surveyed odometer reading), cross-checked against each other for
-  consistency: Davao–Panabo ≈ 32 km, Panabo–Carmen ≈ 8 km,
-  Carmen–Tagum ≈ 15 km, giving cumulative markers of 0 / 32 / 40 / 55 km
-  from Davao Terminal. The Carmen split is an estimate (the straight-line
-  distances are about 6.6 km Panabo–Carmen and 15.4 km Carmen–Tagum), so
-  adjust it if you know the actual figure. Sto. Tomas is on a separate road
-  branching off at Panabo, so it is its own route: Davao–Panabo ≈ 32 km,
-  Panabo–Sto. Tomas ≈ 26 km, Sto. Tomas–Tagum ≈ 28.8 km, giving markers of
-  0 / 32 / 58 / 87 km. Pick the route from the dropdown.
-- **Map:** stop coordinates are approximate town-center positions in `map.js`,
+- Compiled from public road-distance tools (not a
+  surveyed odometer reading). `routes.json` lists the five stops and the road
+  segments between them: Davao–Panabo ≈ 32 km, Panabo–Carmen ≈ 8 km,
+  Carmen–Tagum ≈ 15 km, Panabo–Sto. Tomas ≈ 26 km, Sto. Tomas–Tagum ≈ 28.8 km.
+  The distance between any two stops is the shortest way through those
+  segments, so Davao–Tagum is ≈ 55 km (via Carmen), and Carmen–Sto. Tomas
+  goes through Panabo (≈ 34 km). The Panabo–Carmen–Tagum split is an
+  estimate (straight-line distances are about 6.6 km and 15.4 km), so adjust
+  it if you know the actual figures.
+- Stop coordinates are approximate town-center positions in `map.js`,
   drawn with Leaflet. Tiles come from Esri (works without an API key, even from a double-clicked file), with OpenStreetMap preferred once the site is hosted and an automatic switch if one fails. They show where the stops are,
   not the exact road path.
-- **Fares and distances change.** Both the fare matrix and the route
+- Both the fare matrix and the route
   distances are editable in the app / in `routes.json` — update them if
   LTFRB issues a new fare order, or if you measure the actual distance more
   precisely (e.g. with a GPS tracking app during an actual ride).
