@@ -94,16 +94,19 @@
     highlight.clearLayers();
 
     const stops = currentStops();
-    if (stops.length === 0) return;
+    if (stops.length === 0 || !route) return;
 
-    const points = stops.map((s) => s.pos);
-
-    // Whole route (quiet). Redrawn and re-fitted only when the route changes.
+    // Whole road network (quiet). Drawn once per route.
     const routeKey = stops.map((s) => s.name).join("|");
     if (routeKey !== lastRouteKey) {
       baseLayer.clearLayers();
-      L.polyline(points, { color: SOFT, weight: 3, opacity: 0.6, dashArray: "6 8" }).addTo(baseLayer);
-      map.fitBounds(points, { padding: [30, 30] });
+      const segments = route.segments || stops.slice(1).map((_, i) => ({ from: i, to: i + 1 }));
+      segments.forEach((seg) => {
+        L.polyline([stops[seg.from].pos, stops[seg.to].pos], {
+          color: SOFT, weight: 3, opacity: 0.6, dashArray: "6 8"
+        }).addTo(baseLayer);
+      });
+      map.fitBounds(stops.map((s) => s.pos), { padding: [30, 30] });
       lastRouteKey = routeKey;
     }
 
@@ -111,10 +114,10 @@
     const b = parseInt(toStop.value, 10);
     const hasSelection = !isNaN(a) && !isNaN(b) && stops[a] && stops[b];
 
+    // Highlight the actual path of the selected trip
     if (hasSelection && a !== b) {
-      const lo = Math.min(a, b);
-      const hi = Math.max(a, b);
-      L.polyline(points.slice(lo, hi + 1), { color: BLUE, weight: 6, opacity: 0.9 }).addTo(highlight);
+      const path = RouteGraph.shortest(route, a, b).path;
+      L.polyline(path.map((i) => stops[i].pos), { color: BLUE, weight: 6, opacity: 0.9 }).addTo(highlight);
     }
 
     stops.forEach((stop, i) => {
@@ -136,7 +139,7 @@
   fromStop.addEventListener("change", redraw);
   toStop.addEventListener("change", redraw);
 
-  // script.js / routes-select.js fill the dropdowns, so redraw when they change
+  // script.js fills the dropdowns, so redraw when they change
   new MutationObserver(redraw).observe(toStop, { childList: true });
 
   redraw();
