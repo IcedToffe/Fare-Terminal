@@ -1,17 +1,47 @@
+/* Pasahero Fare Estimator — design system
+   Replaces the old style.css + extras.css (extras.css can be deleted).
+
+   Colour roles (restraint = "designed"):
+   - blue   → actions + selected state
+   - red    → destination + errors only
+   - yellow → the bus sign + the cheaper-fare highlight only
+*/
+
 :root {
-  --paper: #F6F5F1;
+  /* colour */
+  --paper: #F3F2EE;
   --card: #FFFFFF;
   --ink: #1E2328;
-  --ink-soft: #6B7178;
+  --ink-soft: #5F666D;
   --line: #DEDBD2;
   --blue: #1D4E89;
+  --blue-dark: #163F6E;
   --red: #C8102E;
   --yellow: #FFC72C;
+  --sign: #14181D;
+  --good-bg: #FFF6D6;
+
+  /* type */
   --font-display: "Barlow Condensed", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
+
+  /* spacing scale: 4 / 8 / 12 / 16 / 24 / 32 / 48 only */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+
+  /* shape */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --tap: 44px;
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 body {
   margin: 0;
@@ -22,72 +52,121 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2.5rem 1.25rem 3rem;
+  padding: 0 var(--s4) var(--s6);
+  font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Header (the one bold moment) ---------- */
+/* ---------- Header: the bus destination sign (the one bold moment) ---------- */
 
 .site-header {
-  text-align: center;
-  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 64rem;
+  padding: var(--s5) 0 var(--s5);
 }
 
-.site-header h1 {
+.bus-sign {
+  background-color: var(--sign);
+  background-image: radial-gradient(circle, rgba(255, 199, 44, 0.14) 1px, transparent 1.6px);
+  background-size: 6px 6px;
+  border: 3px solid #2B3138;
+  border-radius: var(--radius);
+  padding: var(--s5) var(--s5);
+  text-align: center;
+  box-shadow: inset 0 0 0 2px #0B0E11;
+}
+
+.bus-sign h1 {
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.1rem, 6vw, 2.9rem);
-  letter-spacing: 0.01em;
-  margin: 0 0 0.3rem;
-  color: var(--blue);
+  font-size: clamp(2.25rem, 7vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--yellow);
+  text-shadow: 0 0 12px rgba(255, 199, 44, 0.45);
 }
 
 .tagline {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--ink-soft);
+  margin: var(--s2) 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  letter-spacing: 0.06em;
+  color: #E9D9A6;
 }
 
-main {
+/* ---------- Layout ---------- */
+
+.layout {
   width: 100%;
-  max-width: 28rem;
+  max-width: 64rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s5);
+  align-items: start;
+}
+
+.col-main {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--s5);
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .layout { grid-template-columns: 26rem 1fr; gap: var(--s6); }
+  .col-map { position: sticky; top: var(--s4); }
+  .route-map { height: calc(100vh - 168px); min-height: 24rem; }
 }
 
 /* ---------- Mode toggle ---------- */
 
 .mode-toggle {
   display: flex;
-  border: 1.5px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
+  gap: var(--s1);
+  padding: var(--s1);
+  background: #E7E5DE;
+  border-radius: var(--radius);
 }
 
 .mode-btn {
   flex: 1;
-  padding: 0.7rem 0.5rem;
+  min-height: var(--tap);
+  padding: var(--s2) var(--s3);
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 0.85rem;
-  background: var(--card);
+  font-size: 0.875rem;
+  background: transparent;
   color: var(--ink-soft);
   border: none;
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  transition: background 150ms, color 150ms;
 }
 
+.mode-btn:hover { color: var(--ink); }
 .mode-btn.active {
-  background: var(--blue);
-  color: var(--card);
+  background: var(--card);
+  color: var(--blue);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
-/* ---------- Input card (quiet, no heavy border/shadow) ---------- */
+.mode-btn:focus-visible,
+.calc-btn:focus-visible,
+.settings-panel summary:focus-visible,
+.why-rates summary:focus-visible,
+.checkbox-row input:focus-visible {
+  outline: 3px solid rgba(29, 78, 137, 0.4);
+  outline-offset: 2px;
+}
+
+/* ---------- Input card ---------- */
 
 .input-card {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 1.4rem;
+  border-radius: var(--radius);
+  padding: var(--s5);
 }
 
 .mode-panel { display: none; }
@@ -95,20 +174,20 @@ main {
 
 .field-label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  margin: 0.9rem 0 0.35rem;
+  color: var(--ink-soft);
+  margin: 0 0 var(--s1);
 }
-
-.field-label:first-child { margin-top: 0; }
 
 .field-input {
   width: 100%;
+  min-height: var(--tap);
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  padding: var(--s2) var(--s3);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: var(--paper);
   color: var(--ink);
 }
@@ -116,55 +195,95 @@ main {
 .field-input:focus-visible {
   outline: none;
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(29, 78, 137, 0.15);
+  box-shadow: 0 0 0 3px rgba(29, 78, 137, 0.18);
 }
 
+/* Trip line: ● ─ ◉ */
+.trip { display: flex; gap: var(--s3); }
+
+.trip-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* line up with the middle of each select, below its label */
+  padding: 38px 0 14px;
+  width: 16px;
+}
+
+.pin { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.pin-from { border: 3px solid var(--blue); background: var(--card); }
+.pin-to { background: var(--red); box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.2); }
+
+.rail-line {
+  flex: 1;
+  width: 0;
+  border-left: 2px dotted var(--ink-soft);
+  margin: var(--s1) 0;
+  min-height: var(--s6);
+}
+
+.trip-fields { flex: 1; display: flex; flex-direction: column; gap: var(--s4); min-width: 0; }
+
 .distance-readout {
-  margin: 0.8rem 0 0;
-  font-size: 0.85rem;
+  margin: var(--s4) 0 0;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--ink-soft);
 }
 
 .checkbox-row {
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
-  margin-top: 1.2rem;
-  font-size: 0.85rem;
-  color: var(--ink);
+  gap: var(--s2);
+  margin-top: var(--s4);
+  font-size: 0.875rem;
   line-height: 1.4;
-}
-
-.checkbox-row input { margin-top: 0.2rem; }
-
-.calc-btn {
-  width: 100%;
-  margin-top: 1.3rem;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.95rem;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 8px;
-  background: var(--blue);
-  color: var(--card);
+  min-height: var(--tap);
+  align-items: center;
   cursor: pointer;
 }
 
-.calc-btn:hover { background: #163f6e; }
+.checkbox-row input { width: 20px; height: 20px; flex: none; accent-color: var(--blue); }
 
-.error-text {
-  margin: 0.8rem 0 0;
-  font-size: 0.85rem;
-  color: var(--red);
+.calc-btn {
+  width: 100%;
+  min-height: 52px;
+  margin-top: var(--s4);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--blue);
+  color: var(--card);
+  cursor: pointer;
+  transition: background 150ms, transform 100ms;
 }
 
-/* ---------- Result placard (the second bold moment) ---------- */
+.calc-btn:hover { background: var(--blue-dark); }
+.calc-btn:active { transform: translateY(1px); }
 
-.result-placard {
-  border: 2px solid var(--ink);
-  border-radius: 10px;
-  overflow: hidden;
+.error-text {
+  margin: var(--s3) 0 0;
+  padding: var(--s3);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--red);
+  background: #FBE9EC;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- Ticket result (the second bold moment) ---------- */
+
+.ticket {
+  --notch: 10px;
+  filter: drop-shadow(0 2px 0 rgba(30, 35, 40, 0.12)) drop-shadow(0 8px 16px rgba(30, 35, 40, 0.12));
+  animation: ticket-in 220ms ease-out;
+}
+
+@keyframes ticket-in {
+  from { opacity: 0; transform: translateY(var(--s3)); }
+  to { opacity: 1; transform: none; }
 }
 
 .placard-header {
@@ -172,20 +291,28 @@ main {
   color: var(--card);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  font-size: 1.125rem;
+  letter-spacing: 0.08em;
   text-align: center;
-  padding: 0.6rem;
+  padding: var(--s3);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .placard-body {
   background: var(--card);
-  padding: 1.5rem 1.4rem;
+  padding: var(--s5) var(--s5) var(--s6);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 100%, #0000 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, #0000 97%, #000) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle var(--notch) at 0 100%, #0000 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, #0000 97%, #000) right / 51% 100% no-repeat;
 }
 
 .placard-distance {
-  margin: 0 0 1.1rem;
-  font-size: 0.9rem;
+  margin: 0 0 var(--s4);
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--ink-soft);
   text-align: center;
 }
@@ -193,83 +320,273 @@ main {
 .placard-fares {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  align-items: flex-end;
+  gap: var(--s6);
   flex-wrap: wrap;
 }
 
-.fare-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+.fare-block { display: flex; flex-direction: column; align-items: center; }
 
 .fare-label {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink-soft);
-  margin-bottom: 0.2rem;
+  margin-bottom: var(--s1);
 }
 
 .fare-value {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 2.4rem;
+  font-size: clamp(3.5rem, 14vw, 5rem);
+  line-height: 1;
   color: var(--ink);
 }
 
-.fare-block--discount .fare-value { color: var(--blue); }
+/* when both fares are shown, the discounted one is secondary in size */
+.fare-block--discount .fare-value { color: var(--blue); font-size: clamp(2.5rem, 10vw, 3.5rem); }
 
-.placard-breakdown {
-  margin: 1.2rem 0 0;
-  font-size: 0.8rem;
-  color: var(--ink-soft);
-  text-align: center;
-  border-top: 1px dashed var(--line);
-  padding-top: 0.9rem;
+.ticket-stub {
+  position: relative;
+  background: var(--card);
+  padding: var(--s4) var(--s5) var(--s5);
+  border-radius: 0 0 var(--radius) var(--radius);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 0, #0000 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 0, #0000 97%, #000) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle var(--notch) at 0 0, #0000 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 0, #0000 97%, #000) right / 51% 100% no-repeat;
 }
 
-/* ---------- Settings (collapsed by default, quiet) ---------- */
+/* the perforation between the fare and the stub */
+.ticket-stub::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--s5);
+  right: var(--s5);
+  border-top: 2px dashed var(--line);
+}
+
+.placard-breakdown {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ---------- Compare card (secondary, quieter) ---------- */
+
+.compare-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s4) var(--s5) var(--s5);
+}
+
+.compare-title {
+  margin: 0 0 var(--s2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+}
+
+/* the insight comes first */
+.compare-diff {
+  margin: 0 0 var(--s4);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.compare-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+
+.compare-table th,
+.compare-table td {
+  padding: var(--s3) var(--s2);
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-table thead th {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-table tbody th {
+  text-align: left;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.compare-table td {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td { border-bottom: none; }
+
+/* ui.js adds .is-cheaper to the cheaper column */
+.compare-table .is-cheaper { background: var(--good-bg); }
+.compare-table thead .is-cheaper { border-radius: var(--radius-sm) var(--radius-sm) 0 0; color: var(--ink); }
+.compare-table thead .is-cheaper::after {
+  content: "Mas mura";
+  display: block;
+  margin-top: var(--s1);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #7A5B00;
+}
+.compare-table tbody tr:last-child .is-cheaper { border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+
+/* ---------- Settings (collapsed, quiet) ---------- */
 
 .settings-panel {
   border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  padding: 0 var(--s5);
   background: var(--card);
 }
 
-.settings-panel summary {
-  font-size: 0.9rem;
+.settings-panel > summary,
+.why-rates > summary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   color: var(--blue);
 }
 
+.settings-panel[open] { padding-bottom: var(--s4); }
+
+.settings-subtitle {
+  margin: var(--s4) 0 var(--s2);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
 .settings-grid {
-  margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.6rem;
+  gap: var(--s3);
 }
+
+.why-rates { margin-top: var(--s2); }
+.why-rates > summary { font-weight: 500; font-size: 0.8125rem; }
 
 .settings-note {
-  margin: 1rem 0 0;
-  font-size: 0.78rem;
+  margin: 0 0 var(--s2);
+  font-size: 0.8125rem;
   color: var(--ink-soft);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* ---------- Footer ---------- */
+@media (min-width: 480px) {
+  .settings-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* ---------- Map ---------- */
+
+.map-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s4);
+}
+
+.map-card h2 {
+  margin: 0 0 var(--s3);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+}
+
+.route-map {
+  width: 100%;
+  height: 20rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  z-index: 0;
+}
+
+.route-map.map-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s4);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.map-legend {
+  margin: var(--s3) 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.leaflet-tooltip {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- Mobile sticky fare bar (shown by ui.js) ---------- */
+
+.fare-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s3) var(--s5);
+  background: var(--sign);
+  color: var(--yellow);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.fare-bar-label { font-size: 0.875rem; font-weight: 600; color: #E9D9A6; }
+.fare-bar-value { font-family: var(--font-display); font-weight: 700; font-size: 2rem; line-height: 1; }
+
+@media (min-width: 900px) {
+  .fare-bar { display: none !important; }
+}
+
+/* ---------- Footer + utilities ---------- */
 
 .site-footer {
-  margin-top: 2.5rem;
-  font-size: 0.8rem;
+  margin-top: var(--s7);
+  font-size: 0.8125rem;
   color: var(--ink-soft);
   text-align: center;
 }
 
-/* ---------- Responsive ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 
-@media (min-width: 480px) {
-  .settings-grid { grid-template-columns: 1fr 1fr 1fr; }
-  .settings-grid .field-label { margin-top: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .ticket { animation: none; }
+  * { transition: none !important; }
 }
