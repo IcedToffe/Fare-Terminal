@@ -1,11 +1,10 @@
 # Pasahero Fare Estimator
-
 A  Pasahero Fare Estimator for the Davao Terminal → Panabo → Carmen → Sto. Tomas →
 Tagum stops. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
 
-**[Live demo →](#)** *(add your deployed link here once you host it)*
+**[Live demo →](https://fare-terminal-2tw69g6r1-milo-cb5e.vercel.app/)
 
 ## Why I built this
 
@@ -34,7 +33,7 @@ not a toy example.
 - Fully responsive, no frameworks — plain HTML, CSS, JavaScript, and JSON
 
 ## Where the numbers came from
-
+## Warning: come of the fare and discount is not yet accurate
 - Aircon bus ₱15 for the first 5 km + ₱2.65 per
   succeeding km; Ordinary bus ₱13 for the first 5 km + ₱2.25 per succeeding km.
   These are the LTFRB bus matrix before the March 2026 adjustment (the 2022
