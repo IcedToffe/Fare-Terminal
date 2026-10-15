@@ -4,7 +4,7 @@ Tagum stops. Pick your two stops (or type a distance directly) and it
 calculates the fare using the LTFRB bus fare formula 
 with an editable fare matrix, since rates change over time.
 
-[Live demo →](https://fare-terminal-omega.vercel.app/)
+[Live demo →](https://fare-terminal-2tw69g6r1-milo-cb5e.vercel.app/)
 
 ## Why I built this
 
