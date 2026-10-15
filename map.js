@@ -132,7 +132,7 @@
         fillOpacity: 1
       }).addTo(highlight);
 
-      marker.bindTooltip(stop.name, { permanent: true, direction: "top", offset: [0, -6] });
+      marker.bindTooltip(stop.name, { permanent: isFrom || isTo, direction: "top", offset: [0, -6] });
     });
   }
 
