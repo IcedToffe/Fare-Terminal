@@ -33,7 +33,7 @@ not a toy example.
 - Fully responsive, no frameworks — plain HTML, CSS, JavaScript, and JSON
 
 ## Where the numbers came from
-## Warning: come of the fare and discount is not yet accurate
+## Warning: Some of the fare and discount is not yet accurate
 - Aircon bus ₱15 for the first 5 km + ₱2.65 per
   succeeding km; Ordinary bus ₱13 for the first 5 km + ₱2.25 per succeeding km.
   These are the LTFRB bus matrix before the March 2026 adjustment (the 2022
